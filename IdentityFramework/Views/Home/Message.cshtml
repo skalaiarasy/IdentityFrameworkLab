@@ -1,0 +1,20 @@
+﻿@model List<Message>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>User Information</h1>
+@foreach(Message message in Model)
+            {
+    @if (message.UserId == User.Identity.Name)
+                {
+<h1>@message.UserId @message.Message1  @message.PostedTime</h1>
+                }
+                
+                
+            }
+<form method="post" asp-action="Message">
+    <input name="message"  />
+    <button type="submit">Click here to message</button>
+</form>
