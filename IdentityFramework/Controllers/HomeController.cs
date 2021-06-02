@@ -51,7 +51,7 @@ namespace IdentityFramework.Controllers
                 Message newMessage = new Message();
                 
                 newMessage.UserId = User.Identity.Name;
-                newMessage.PostedTime = DateTime.Today;
+                newMessage.PostedTime = DateTime.Now;
                 newMessage.Updated = false;
                 newMessage.Message1 = message;
                 context.Add(newMessage);
@@ -59,6 +59,38 @@ namespace IdentityFramework.Controllers
                 //return View(context.Messages.ToList());
             }
             return Redirect("Message");
+        }
+        [Authorize]
+        //public IActionResult EditDelete(int id)
+        //{
+        //    using (MessageDbContext context = new MessageDbContext())
+        //    {
+        //        Message message = new Message();
+        //        message = context.Messages.ToList().Find(m => m.Id == id);
+        //        return View(message);
+        //    }
+
+
+        //}
+        public IActionResult EditDelete(string message)
+        {
+           
+            return View(message);
+        }
+
+        [Authorize , HttpPost]
+        public IActionResult Delete(int id)
+        {
+            using(MessageDbContext context = new MessageDbContext())
+            {
+                Message messageD = new Message();
+                messageD = context.Messages.ToList().Find(m => m.Id==id);                          
+                context.Messages.Remove(messageD);
+                context.SaveChanges();
+                return RedirectToAction("EditDelete", new { message = messageD.Message1});
+            }
+           
+           
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

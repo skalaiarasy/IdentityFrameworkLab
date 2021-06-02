@@ -84,3 +84,4 @@ C:\Users\ramna\source\repos\IdentityFramework\IdentityFramework\obj\Debug\net5.0
 C:\Users\ramna\source\repos\IdentityFramework\IdentityFramework\obj\Debug\net5.0\IdentityFramework.pdb
 C:\Users\ramna\source\repos\IdentityFramework\IdentityFramework\obj\Debug\net5.0\IdentityFramework.genruntimeconfig.cache
 C:\Users\ramna\source\repos\IdentityFramework\IdentityFramework\obj\Debug\net5.0\Razor\Views\Home\Message.cshtml.g.cs
+C:\Users\ramna\source\repos\IdentityFramework\IdentityFramework\obj\Debug\net5.0\Razor\Views\Home\EditDelete.cshtml.g.cs
