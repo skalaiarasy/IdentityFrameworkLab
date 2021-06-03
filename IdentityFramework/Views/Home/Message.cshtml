@@ -4,24 +4,36 @@
 *@
 @{
 }
-<h1>User Information</h1>
+<h1>Welcome to Message View </h1>
 @foreach (Message message in Model)
 {
     @if (message.UserId == User.Identity.Name)
     {
-        <h1> @message.Message1  @message.PostedTime</h1>
+
+        <h3>@message.UserId</h3>
+        <h3> @message.Message1</h3>
+        <h3> @message.PostedTime </h3>
+
+
     }
-    @*<a asp-action="EditDelete" asp-route-id="@message.Id">Delet</a>*@
-    <form method="post" asp-action="Delete" asp-route-id="@message.Id">
 
-        <button type="submit">Delete</button>
-    </form>
+    @if (message.Updated == true)
+    {
+        <p>Edited</p>
+    }
 
+    @if (User.Identity.Name == message.UserId)
+    {
+        <a asp-action="EditDelete" asp-route-id="@message.Id">Edit</a>
+        <a asp-action="EditDelete" asp-route-id="@message.Id">Delete</a>
+    }
+
+    
 
 }
 <form method="post" asp-action="Message">
-    <input name="message" />
-    <button type="submit">Click here to message</button>
+    <input name="message" placeholder=" Add a New message" />
+    <button type="submit">Add</button>
 </form>
 
 

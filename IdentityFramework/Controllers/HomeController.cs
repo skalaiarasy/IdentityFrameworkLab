@@ -49,6 +49,7 @@ namespace IdentityFramework.Controllers
             using (MessageDbContext context = new MessageDbContext())
             {
                 Message newMessage = new Message();
+               
                 
                 newMessage.UserId = User.Identity.Name;
                 newMessage.PostedTime = DateTime.Now;
@@ -56,42 +57,79 @@ namespace IdentityFramework.Controllers
                 newMessage.Message1 = message;
                 context.Add(newMessage);
                 context.SaveChanges();
-                //return View(context.Messages.ToList());
+               
             }
             return Redirect("Message");
+        }    
+        
+
+        [Authorize, HttpPost]
+        public IActionResult Delete(int id, string message)
+        {
+            Message messageD = new Message();
+            using (MessageDbContext context = new MessageDbContext())
+            {
+                
+                messageD = context.Messages.ToList().Find(m => m.Id == id);
+                messageD.Message1 = message;
+                context.Messages.Remove(messageD);
+                context.SaveChanges();
+                
+            }
+            return RedirectToAction("Message");
+
         }
-        [Authorize]
-        //public IActionResult EditDelete(int id)
+
+        //public IActionResult EditDelete(string message)
+        //{
+
+        //    return View(message);
+        //}
+
+        //public IActionResult Delete(int id)
         //{
         //    using (MessageDbContext context = new MessageDbContext())
         //    {
-        //        Message message = new Message();
-        //        message = context.Messages.ToList().Find(m => m.Id == id);
-        //        return View(message);
+        //        Message messageD = new Message();
+        //        messageD = context.Messages.ToList().Find(m => m.Id == id);
+        //        context.Messages.Remove(messageD);
+        //        context.SaveChanges();
+        //       return RedirectToAction("EditDelete", new { message = messageD.Message1});
         //    }
 
-
         //}
-        public IActionResult EditDelete(string message)
-        {
-           
-            return View(message);
-        }
+        [Authorize, HttpPost]
 
-        [Authorize , HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Edit(int id, string message)
         {
-            using(MessageDbContext context = new MessageDbContext())
+            Message messageEdit = new Message();
+            using (MessageDbContext context = new MessageDbContext())
             {
-                Message messageD = new Message();
-                messageD = context.Messages.ToList().Find(m => m.Id==id);                          
-                context.Messages.Remove(messageD);
+
+                messageEdit = context.Messages.ToList().Find(e => e.Id == id);
+                messageEdit.Updated = true;
+                messageEdit.PostedTime = DateTime.Now;
+                messageEdit.Message1 = message;                
                 context.SaveChanges();
-                return RedirectToAction("EditDelete", new { message = messageD.Message1});
+
             }
-           
-           
+            return RedirectToAction("Message");
+
         }
+        public IActionResult EditDelete(int id)
+        {
+            using (MessageDbContext context = new MessageDbContext())
+            {
+                Message message = new Message();
+                message = context.Messages.ToList().Find(m => m.Id == id);
+                return View(message);
+            }
+                
+        }
+        
+        
+
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
